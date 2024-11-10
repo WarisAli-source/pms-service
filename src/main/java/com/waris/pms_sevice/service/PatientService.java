@@ -5,7 +5,9 @@ package com.waris.pms_sevice.service;
 import com.waris.pms_sevice.dto.PatientDTO;
 import com.waris.pms_sevice.entity.Patient;
 import com.waris.pms_sevice.exception.PatientNotFoundException;
+import com.waris.pms_sevice.repository.MedicalRecordRepository;
 import com.waris.pms_sevice.repository.PatientRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ public class PatientService {
 
     @Autowired
     private PatientRepository patientRepository;
+    @Autowired
+    private MedicalRecordRepository medicalRecordRepository;
 
     // Register a new patient
     public Patient registerPatient(Patient patient) {

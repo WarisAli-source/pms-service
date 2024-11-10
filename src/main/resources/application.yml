@@ -11,3 +11,14 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+
+    logging:
+      level:
+        org:
+          hibernate:
+            SQL: DEBUG
+            type:
+              descriptor:
+                sql: TRACE
+

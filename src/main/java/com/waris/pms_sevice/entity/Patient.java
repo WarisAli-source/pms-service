@@ -1,12 +1,17 @@
 package com.waris.pms_sevice.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.type.SqlTypes;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -26,14 +31,14 @@ public class Patient {
     private String gender;
     private String phone;
     private String email;
-
-    // Address fields directly in Patient entity
     private String street;
     private String city;
     private String state;
     private String zipCode;
 
-    // Constructor, Getters, and Setters
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<MedicalRecord> medicalRecords;
 
     public Patient(String firstName, String lastName, LocalDate dateOfBirth, String gender, String phone,
                    String email, String street, String city, String state, String zipCode) {
@@ -136,6 +141,14 @@ public class Patient {
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
+    public List<MedicalRecord> getMedicalRecords() {
+        return medicalRecords;
+    }
+
+    public void setMedicalRecords(List<MedicalRecord> medicalRecords) {
+        this.medicalRecords = medicalRecords;
+    }
+
 
 }
 
