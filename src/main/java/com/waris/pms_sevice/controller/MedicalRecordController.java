@@ -2,18 +2,18 @@ package com.waris.pms_sevice.controller;
 
 import com.waris.pms_sevice.dto.PatientWithRecordsDTO;
 import com.waris.pms_sevice.entity.MedicalRecord;
-import com.waris.pms_sevice.entity.Patient;
 import com.waris.pms_sevice.service.MedicalRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/medical-records")
+@CrossOrigin(origins = "http://localhost:4200")
+
 public class MedicalRecordController {
 
     @Autowired
