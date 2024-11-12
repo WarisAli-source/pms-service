@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -39,7 +39,7 @@ public class MedicalRecordService {
         if (patientRepository.existsById(patientId)) {
             return medicalRecordRepository.findByPatientId(patientId);
         } else {
-            throw new IllegalArgumentException("Patient not found");
+            return new ArrayList<>();
         }
     }
 
@@ -88,4 +88,7 @@ public class MedicalRecordService {
         }).collect(Collectors.toList());
     }
 
+    public Optional<MedicalRecord> getMedicalRecordsById(Long id) {
+        return medicalRecordRepository.findById(id);
+    }
 }

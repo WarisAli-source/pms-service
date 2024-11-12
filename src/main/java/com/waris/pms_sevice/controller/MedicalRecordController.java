@@ -38,6 +38,15 @@ public class MedicalRecordController {
             return ResponseEntity.notFound().build();
         }
     }
+    @GetMapping("/records/{id}")
+    public ResponseEntity<Optional<MedicalRecord>> getMedicalRecordsById(@PathVariable Long id) {
+        try {
+            Optional<MedicalRecord> records = medicalRecordService.getMedicalRecordsById(id);
+            return ResponseEntity.ok(records);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<MedicalRecord> updateMedicalRecord(@PathVariable Long id, @RequestBody MedicalRecord updatedRecord) {
