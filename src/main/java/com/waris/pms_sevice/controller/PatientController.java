@@ -54,4 +54,9 @@ public class PatientController {
             return ResponseEntity.ok("Fail");
         }
     }
+    @GetMapping("/search")
+    public ResponseEntity<List<PatientDTO>> searchPatients(@RequestParam String name) {
+        List<PatientDTO> patients = patientService.findPatientsByName(name);
+        return ResponseEntity.ok(patients);
+    }
 }

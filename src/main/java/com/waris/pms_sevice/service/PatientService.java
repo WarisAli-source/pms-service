@@ -83,4 +83,8 @@ public class PatientService {
             return "1";
         }
     }
+
+    public List<PatientDTO> findPatientsByName(String name) {
+        return patientRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(name,name);
+    }
 }
