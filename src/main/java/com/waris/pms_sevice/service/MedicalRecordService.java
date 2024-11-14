@@ -91,4 +91,8 @@ public class MedicalRecordService {
     public Optional<MedicalRecord> getMedicalRecordsById(Long id) {
         return medicalRecordRepository.findById(id);
     }
+
+    public long medicalRecordsCount() {
+        return medicalRecordRepository.count();
+    }
 }

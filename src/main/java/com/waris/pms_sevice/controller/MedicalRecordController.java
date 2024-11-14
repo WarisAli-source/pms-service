@@ -67,4 +67,9 @@ public class MedicalRecordController {
         List<PatientWithRecordsDTO> patientsWithRecords = medicalRecordService.getAllPatientsWithMedicalRecords();
         return ResponseEntity.ok(patientsWithRecords);
     }
+    @GetMapping("/medicalRecordsCount")
+    public ResponseEntity<Long> medicalRecordsCount() {
+        long count = medicalRecordService.medicalRecordsCount();
+        return ResponseEntity.ok(count);
+    }
 }

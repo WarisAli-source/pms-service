@@ -59,4 +59,10 @@ public class PatientController {
         List<PatientDTO> patients = patientService.findPatientsByName(name);
         return ResponseEntity.ok(patients);
     }
+
+    @GetMapping("/patientCount")
+    public ResponseEntity<Long> getPatientCount() {
+        long count = patientService.getPatientCount();
+        return ResponseEntity.ok(count);
+    }
 }

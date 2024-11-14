@@ -87,4 +87,7 @@ public class PatientService {
     public List<PatientDTO> findPatientsByName(String name) {
         return patientRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(name,name);
     }
+    public long getPatientCount() {
+        return patientRepository.count();
+    }
 }
