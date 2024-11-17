@@ -1,6 +1,5 @@
 package com.waris.pms_sevice.filter;
 
-import com.waris.pms_sevice.service.UserService;
 import com.waris.pms_sevice.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -26,7 +25,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Lazy
     @Autowired
-    private UserDetailsService userDetailsService; // Use interface instead of concrete class
+    private UserDetailsService userDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

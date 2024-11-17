@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/patients")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 public class PatientController {
 
     @Autowired

@@ -11,13 +11,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/pms")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 public class LoginController {
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -29,11 +29,10 @@ public class LoginController {
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User user) {
+    public ResponseEntity<?> registerUser(@RequestBody User user) {
         if (userService.userExists(user.getUsername())) {
-            return ResponseEntity.badRequest().body(null); // Return 400 if the user already exists
+            return new ResponseEntity<>("User Already Exists", HttpStatus.BAD_REQUEST);
         }
-
         User registeredUser = userService.registerUser(user);
         return ResponseEntity.status(201).body(registeredUser);
     }
@@ -51,5 +50,15 @@ public class LoginController {
         final String jwtToken = jwtUtil.generateToken(userDetails);
 
         return ResponseEntity.ok(new AuthResponse(jwtToken));
+    }
+    @GetMapping("/getAllRegisteredUsers")
+    public ResponseEntity<?> getAllRegisteredUsers() {
+        List<User> registeredUser = userService.getAllUsers();
+        return ResponseEntity.status(201).body(registeredUser);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout() {
+        return ResponseEntity.ok("Logged out successfully. Please clear your token.");
     }
 }
