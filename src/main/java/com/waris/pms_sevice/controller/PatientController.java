@@ -3,6 +3,9 @@ package com.waris.pms_sevice.controller;
 import com.waris.pms_sevice.dto.PatientDTO;
 import com.waris.pms_sevice.entity.Patient;
 import com.waris.pms_sevice.service.PatientService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -34,8 +37,10 @@ public class PatientController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PatientDTO>> getAllPatients() {
-        List<PatientDTO> patients = patientService.getAllPatients();
+    public ResponseEntity<Page<PatientDTO>> getAllPatients(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Page<PatientDTO> patients = patientService.getAllPatients(page, size);
         return ResponseEntity.ok(patients);
     }
 

@@ -9,6 +9,9 @@ import com.waris.pms_sevice.repository.MedicalRecordRepository;
 import com.waris.pms_sevice.repository.PatientRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,23 +51,23 @@ public class PatientService {
     }
 
     // Retrieve all patients
-    public List<PatientDTO> getAllPatients() {
-        List<Patient> patients = patientRepository.findAll();
-        return patients.stream()
-                .map(patient -> new PatientDTO(
-                        patient.getId(),
-                        patient.getFirstName(),
-                        patient.getLastName(),
-                        patient.getDateOfBirth(),
-                        patient.getGender(),
-                        patient.getPhone(),
-                        patient.getEmail(),
-                        patient.getStreet(),
-                        patient.getCity(),
-                        patient.getState(),
-                        patient.getZipCode()
-                ))
-                .collect(Collectors.toList());
+    public Page<PatientDTO> getAllPatients(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<Patient> patientPage = patientRepository.findAll(pageRequest);
+
+        return patientPage.map(patient -> new PatientDTO(
+                patient.getId(),
+                patient.getFirstName(),
+                patient.getLastName(),
+                patient.getDateOfBirth(),
+                patient.getGender(),
+                patient.getPhone(),
+                patient.getEmail(),
+                patient.getStreet(),
+                patient.getCity(),
+                patient.getState(),
+                patient.getZipCode()
+        ));
     }
 
     // Update patient information
