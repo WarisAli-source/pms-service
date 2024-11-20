@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,9 +52,13 @@ public class PatientService {
     }
 
     // Retrieve all patients
-    public Page<PatientDTO> getAllPatients(int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
-        Page<Patient> patientPage = patientRepository.findAll(pageRequest);
+    public Page<PatientDTO> getAllPatients(int page, int size, String sortBy, String sortDirection) {
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.DESC.name())
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<Patient> patientPage = patientRepository.findAll(pageable);
 
         return patientPage.map(patient -> new PatientDTO(
                 patient.getId(),
@@ -93,4 +98,25 @@ public class PatientService {
     public long getPatientCount() {
         return patientRepository.count();
     }
+
+    public List<PatientDTO> getAllPatientsWithoutPagination() {
+        List<Patient> patients = patientRepository.findAll();
+
+        return patients.stream()
+                .map(patient -> new PatientDTO(
+                        patient.getId(),
+                        patient.getFirstName(),
+                        patient.getLastName(),
+                        patient.getDateOfBirth(),
+                        patient.getGender(),
+                        patient.getPhone(),
+                        patient.getEmail(),
+                        patient.getStreet(),
+                        patient.getCity(),
+                        patient.getState(),
+                        patient.getZipCode()
+                ))
+                .collect(Collectors.toList());
+    }
+
 }

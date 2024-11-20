@@ -13,5 +13,5 @@ import java.util.List;
 public interface PatientRepository extends JpaRepository<Patient, Long> {
     Page<Patient> findAll(Pageable pageable);
     List<PatientDTO> findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(String firstName, String lastName);
-
+    List<Patient> findAll();
 }

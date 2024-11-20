@@ -39,8 +39,15 @@ public class PatientController {
     @GetMapping
     public ResponseEntity<Page<PatientDTO>> getAllPatients(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        Page<PatientDTO> patients = patientService.getAllPatients(page, size);
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDirection) {
+        Page<PatientDTO> patients = patientService.getAllPatients(page, size, sortBy, sortDirection);
+        return ResponseEntity.ok(patients);
+    }
+    @GetMapping("/allPatientsWithoutPagination")
+    public ResponseEntity<List<PatientDTO>> getAllPatientsWithoutPagination() {
+        List<PatientDTO> patients = patientService.getAllPatientsWithoutPagination();
         return ResponseEntity.ok(patients);
     }
 
