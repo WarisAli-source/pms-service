@@ -1,13 +1,8 @@
 package com.waris.pms_sevice.service;
-
-
-
 import com.waris.pms_sevice.dto.PatientDTO;
 import com.waris.pms_sevice.entity.Patient;
-import com.waris.pms_sevice.exception.PatientNotFoundException;
 import com.waris.pms_sevice.repository.MedicalRecordRepository;
 import com.waris.pms_sevice.repository.PatientRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -48,10 +43,9 @@ public class PatientService {
                         patient.getState(),
                         patient.getZipCode()
                 ))
-                .orElse(null); // return null or throw an exception if not found
+                .orElse(null);
     }
 
-    // Retrieve all patients
     public Page<PatientDTO> getAllPatients(int page, int size, String sortBy, String sortDirection) {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.DESC.name())
                 ? Sort.by(sortBy).descending()
@@ -75,7 +69,6 @@ public class PatientService {
         ));
     }
 
-    // Update patient information
     public Patient updatePatient(Long id, Patient updatedPatient) {
         updatedPatient.setId(id);
         return patientRepository.save(updatedPatient);
